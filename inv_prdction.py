@@ -18,17 +18,28 @@ data['day_1'] = data['units_sold'].shift(-1)
 data['day_2'] = data['units_sold'].shift(-2)
 data['day_3'] = data['units_sold'].shift(-3)
 data['day_4'] = data['units_sold'].shift(-4)
+data['day_5'] = data['units_sold'].shift(-5)
+data['day_6'] = data['units_sold'].shift(-6)
+data['day_7'] = data['units_sold'].shift(-7)
+
 
 
 df=data
 
-x1, x2, x3, x4, y = df['day_1'], df['day_2'], df['day_3'], df['day_4'], df['units_sold']
-x1, x2, x3, x4, y = np.array(x1), np.array(x2), np.array(x3), np.array(x4), np.array(y)
-x1, x2, x3, x4, y = x1.reshape(-1,1), x2.reshape(-1,1), x3.reshape(-1,1), x4.reshape(-1,1), y.reshape(-1,1)
+# x1, x2, x3, x4, y = df['day_1'], df['day_2'], df['day_3'], df['day_4'], df['units_sold']
+# x1, x2, x3, x4, y = np.array(x1), np.array(x2), np.array(x3), np.array(x4), np.array(y)
+# x1, x2, x3, x4, y = x1.reshape(-1,1), x2.reshape(-1,1), x3.reshape(-1,1), x4.reshape(-1,1), y.reshape(-1,1)
+
+#Now Do it for 7 days data
+x1, x2, x3, x4, x5, x6, x7, y = df['day_1'], df['day_2'], df['day_3'], df['day_4'], df['day_5'], df['day_6'], df['day_7'], df['units_sold']
+x1, x2, x3, x4, x5, x6, x7, y = np.array(x1), np.array(x2), np.array(x3), np.array(x4), np.array(x5), np.array(x6), np.array(x7), np.array(y)
+x1, x2, x3, x4, x5, x6, x7, y = x1.reshape(-1,1), x2.reshape(-1,1), x3.reshape(-1,1), x4.reshape(-1,1), x5.reshape(-1,1), x6.reshape(-1,1), x7.reshape(-1,1), y.reshape(-1,1)
+
+
 
 split_percentage = 15
 test_split = int(len(df)*(split_percentage/100))
-x = np.concatenate((x1, x2, x3, x4), axis=1)
+x = np.concatenate((x1, x2, x3, x4, x5, x6, x7), axis=1)
 X_train,X_test,y_train,y_test = x[:-test_split],x[-test_split:],y[:-test_split],y[-test_split:]
 print(X_train.shape)
 print(X_test.shape)
@@ -54,6 +65,8 @@ xgb_regressor.fit(X_train, y_train)
 
 y_pred = xgb_regressor.predict(X_test)
 print("R Sq. Score for XGBoost :", xgb_regressor.score(X_test, y_test))
+
+
 
 print(data.head())
 

@@ -6,13 +6,6 @@ import xgboost
 from sklearn.ensemble import RandomForestRegressor
 
 data = pd.read_csv('data.csv')
-fig = px.scatter(
-    data,
-    x='week',
-    y='units_sold',
-    
-)
-fig.show()
 
 data['key'] = data['week'].astype(str)+'_'+data['store_id'].astype(str)
 
